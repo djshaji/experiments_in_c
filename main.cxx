@@ -21,27 +21,18 @@
  * 
  */
 
-
 #include <iostream>
-#include <dlfcn.h>
+#include <ladspa.h>
+#include "plugin.h"
+#include "lib.h"
 
-//~ #include "lib.h"
 using namespace std ;
 
 int main(int argc, char **argv)
 {
 	cout << "Welcome\n" ;
-	void* handle = dlopen("./lib.so", RTLD_LAZY);
-	void (*f)(void);
-	if (handle == NULL) {
-		printf ("%s\n", dlerror ());
-		exit (1) ;
-	}
-	
-	*(void **)(&f) = dlsym (handle, "say") ;
-	(*f) ();
-	
-
+	state_t state ;
+	plugin_init (&state, "./amp.so", 0) ;
 	return 0;
 }
 
